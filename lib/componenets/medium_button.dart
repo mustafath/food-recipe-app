@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'package:flutter/material.dart';
+import 'package:food_recipe_app/extensions/colors.dart';
 
 class MediumButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,7 +20,7 @@ class MediumButton extends StatelessWidget {
       height: 54,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xFF129575),
+        color: AppColors.accentColor,
       ),
       child: ElevatedButton(
         onPressed: onPressed,

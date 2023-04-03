@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe_app/screens/login/login_screen.dart';
 import 'package:kartal/kartal.dart';
 
-import '../../Components/medium_button.dart';
-import '../../Utils/text_styles.dart';
+import '../../componenets/medium_button.dart';
+import '../../extensions/text_style.dart';
+
 import 'splash_screen_constants.dart';
 
 // Extensions for padding
@@ -26,6 +28,12 @@ extension PaddingExtension on Widget {
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
+  void _handleStartCookingPressed(BuildContext context) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +50,12 @@ class SplashScreen extends StatelessWidget {
                 _PremiumRecipeText().paddingTop(context.dynamicHeight(0.017)),
                 _getCookingText().paddingTop(context.dynamicHeight(0.27)),
                 _simpleWayText().paddingTop(context.dynamicHeight(0.025)),
-                _startCookingButton()
+                MediumButton(
+                  buttonText: Constants.start_cooking,
+                  onPressed: () {
+                    _handleStartCookingPressed(context);
+                  },
+                )
                     .paddingTop(context.dynamicHeight(0.078))
                     .paddingBottom(context.dynamicHeight(0.115)),
               ],
@@ -53,19 +66,13 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  Widget _startCookingButton() {
-    return MediumButton(
-      buttonText: Constants.start_cooking,
-      onPressed: () {},
-    );
-  }
-
-  Text _simpleWayText() => Text(Constants.simple_way, style: normalTextRegular);
+  Text _simpleWayText() =>
+      Text(Constants.simple_way, style: AppTextStyles.normalTextRegular);
 
   Text _getCookingText() {
     return Text(
       Constants.get_cooking,
-      style: headerTitle,
+      style: AppTextStyles.headerTitle,
       textAlign: TextAlign.center,
     );
   }
@@ -78,7 +85,7 @@ class _PremiumRecipeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       Constants.premium_recipte,
-      style: mediumTextBold,
+      style: AppTextStyles.mediumTextBold,
     );
   }
 }
@@ -104,8 +111,8 @@ class _linearGradientFromBottom extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
             Color.fromRGBO(0, 0, 0, 0.4),
             Color.fromRGBO(0, 0, 0, 1),
