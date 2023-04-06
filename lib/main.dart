@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Food Recipe App',
-      home: SignupScreen(),
+      home: SplashScreen(),
       theme: ThemeData(
         primaryColor: AppColors.accentColor,
       ),

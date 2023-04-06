@@ -61,7 +61,14 @@ class buildScaffold extends StatelessWidget {
                 context.watch<LoginCubit>().state is LoginLoading
                     ? (context.watch<LoginCubit>().state as LoginLoading)
                             .isLoading
-                        ? CircularProgressIndicator().paddingTop(25)
+                        ? SizedBox(
+                            height: 60,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.accentColor,
+                              ),
+                            ),
+                          ).paddingTop(25)
                         : SignInButton(onPressed: () async {
                             context.read<LoginCubit>().logIn(
                                 email: context
