@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.9.0
   kartal: ^2.8.0
+  flutter_bloc: ^8.1.2
+  firebase_auth: ^4.4.0
 
 dev_dependencies:
   flutter_test:

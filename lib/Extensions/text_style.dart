@@ -58,10 +58,10 @@ extension AppTextStyles on TextStyle {
 
   static const TextStyle smallerTextRegular = TextStyle(
     fontFamily: 'Poppins',
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
     fontSize: 11,
-    height: 1.0,
+    height: 1.65,
     color: Colors.black,
   );
 
@@ -71,6 +71,15 @@ extension AppTextStyles on TextStyle {
     fontStyle: FontStyle.normal,
     fontSize: 11,
     height: 1.0,
+    color: Colors.black,
+  );
+
+  static const TextStyle largeTextBold = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
+    fontSize: 20,
+    height: 1.5,
     color: Colors.black,
   );
 }

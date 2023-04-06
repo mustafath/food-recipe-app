@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/screens/login/login_screen.dart';
+import 'package:food_recipe_app/screens/login/view/login_screen.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../componenets/medium_button.dart';

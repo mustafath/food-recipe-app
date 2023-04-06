@@ -13,7 +13,7 @@ class BigButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 315,
+      width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
