@@ -31,28 +31,29 @@ class LoginCubit extends Cubit<LoginState> {
 
   bool isLoading = false;
 
-  LoginCubit(
-      {required this.emailController,
-      required this.passwordController,
-      required this.formKey})
-      : super(LoginInitial());
+  LoginCubit({
+    required this.emailController,
+    required this.passwordController,
+    required this.formKey,
+  }) : super(LoginInitial());
 
   Future<void> logIn({required String email, required String password}) async {
-    changeLoadingView(true);
+    setLoadingState(true);
     try {
       await AuthService.instance
           .signIn(email: email, password: password)
           .then((value) {
-        changeLoadingView(false);
+        print(value?.user?.uid);
+        setLoadingState(false);
         emit(LoginSuccess(user: value?.user));
       });
     } catch (e) {
-      changeLoadingView(false);
-      if (e is FirebaseAuthException) LoginFailure(e);
+      setLoadingState(false);
+      if (e is FirebaseAuthException) emit(LoginFailure(e));
     }
   }
 
-  void changeLoadingView(bool state) {
+  void setLoadingState(bool state) {
     emit(LoginLoading(state));
   }
 }

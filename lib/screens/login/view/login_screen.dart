@@ -1,13 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 
 import 'package:food_recipe_app/extensions/colors.dart';
 import 'package:food_recipe_app/screens/login/login_screen_constants.dart';
-import 'package:food_recipe_app/screens/login/widgets/enter_password_text.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
 
 import '../../../componenets/app_text_field.dart';
@@ -16,6 +12,7 @@ import '../../../componenets/social_media_button.dart';
 import '../../../extensions/text_style.dart';
 import '../export.dart';
 import '../viewmodel/login_cubit.dart';
+import '../widgets/enter_password_text.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -38,63 +35,62 @@ class buildScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          width: double.infinity,
-          color: AppColors.backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Center(
-              child: Form(
-                key: context.watch<LoginCubit>().formKey,
-                child: Column(children: [
-                  HelloText().paddingTop(context.dynamicHeight(0.115)),
-                  WelcomeBackText().paddingTop(context.dynamicHeight(0.017)),
-                  EmailText().paddingTop(context.dynamicHeight(0.07)),
-                  EmailTextField(
-                          emailController:
-                              context.watch<LoginCubit>().emailController)
-                      .paddingTop(5),
-                  EnterPasswordText().paddingTop(30),
-                  PasswordTextField(
-                          passwordController:
-                              context.watch<LoginCubit>().passwordController)
-                      .paddingTop(5),
-                  ForgotPasswordText().paddingTop(20),
-                  context.watch<LoginCubit>().state is LoginLoading
-                      ? (context.watch<LoginCubit>().state as LoginLoading)
-                              .isLoading
-                          ? CircularProgressIndicator().paddingTop(25)
-                          : SignInButton(onPressed: () async {
-                              context.read<LoginCubit>().logIn(
-                                  email: context
-                                      .read<LoginCubit>()
-                                      .emailController
-                                      .text,
-                                  password: context
-                                      .read<LoginCubit>()
-                                      .passwordController
-                                      .text);
-                            }).paddingTop(25)
-                      : SignInButton(onPressed: () async {
-                          context.read<LoginCubit>().logIn(
-                              email: context
-                                  .read<LoginCubit>()
-                                  .emailController
-                                  .text,
-                              password: context
-                                  .read<LoginCubit>()
-                                  .passwordController
-                                  .text);
-                        }).paddingTop(25),
-                  SignInWith().paddingTop(20),
-                  SocialMediaButtons().paddingTop(20),
-                  DontHaveAnAccount().paddingTop(55),
-                ]),
-              ),
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        width: double.infinity,
+        color: AppColors.backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Center(
+            child: Form(
+              key: context.watch<LoginCubit>().formKey,
+              child: Column(children: [
+                HelloText().paddingTop(context.dynamicHeight(0.115)),
+                WelcomeBackText().paddingTop(context.dynamicHeight(0.017)),
+                EmailText().paddingTop(context.dynamicHeight(0.07)),
+                EmailTextField(
+                        emailController:
+                            context.watch<LoginCubit>().emailController)
+                    .paddingTop(5),
+                EnterPasswordText().paddingTop(30),
+                PasswordTextField(
+                        passwordController:
+                            context.watch<LoginCubit>().passwordController)
+                    .paddingTop(5),
+                ForgotPasswordText().paddingTop(20),
+                context.watch<LoginCubit>().state is LoginLoading
+                    ? (context.watch<LoginCubit>().state as LoginLoading)
+                            .isLoading
+                        ? CircularProgressIndicator().paddingTop(25)
+                        : SignInButton(onPressed: () async {
+                            context.read<LoginCubit>().logIn(
+                                email: context
+                                    .read<LoginCubit>()
+                                    .emailController
+                                    .text,
+                                password: context
+                                    .read<LoginCubit>()
+                                    .passwordController
+                                    .text);
+                          }).paddingTop(25)
+                    : SignInButton(onPressed: () async {
+                        context.read<LoginCubit>().logIn(
+                            email:
+                                context.read<LoginCubit>().emailController.text,
+                            password: context
+                                .read<LoginCubit>()
+                                .passwordController
+                                .text);
+                      }).paddingTop(25),
+                SignInWith().paddingTop(20),
+                SocialMediaButtons().paddingTop(20),
+                DontHaveAnAccount().paddingTop(55),
+              ]),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -114,7 +110,7 @@ class SocialMediaButtons extends StatelessWidget {
         SocialMediaButton(
           iconPath: "lib/assets/fb.png",
           onPressed: () {},
-        )
+        ),
       ],
     );
   }
