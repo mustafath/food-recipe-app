@@ -39,6 +39,7 @@ dependencies:
   kartal: ^2.8.0
   flutter_bloc: ^8.1.2
   firebase_auth: ^4.4.0
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:

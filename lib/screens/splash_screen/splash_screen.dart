@@ -5,6 +5,7 @@ import 'package:kartal/kartal.dart';
 import '../../componenets/medium_button.dart';
 import '../../extensions/text_style.dart';
 
+import '../add_recipe/view/add_recipe.dart';
 import 'splash_screen_constants.dart';
 
 // Extensions for padding
@@ -30,7 +31,7 @@ class SplashScreen extends StatelessWidget {
 
   void _handleStartCookingPressed(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => LoginScreen(),
+      builder: (context) => AddRecipe(),
     ));
   }
 

@@ -10,6 +10,7 @@ import '../../../componenets/app_text_field.dart';
 import '../../../componenets/big_button.dart';
 import '../../../componenets/social_media_button.dart';
 import '../../../extensions/text_style.dart';
+import '../../add_recipe/view/add_recipe.dart';
 import '../export.dart';
 import '../viewmodel/login_cubit.dart';
 import '../widgets/enter_password_text.dart';
@@ -26,7 +27,21 @@ class LoginScreen extends StatelessWidget {
           emailController: emailController,
           formKey: formKey,
           passwordController: passwordController),
-      child: buildScaffold(),
+      child: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginSuccess) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddRecipe(),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return buildScaffold();
+        },
+      ),
     );
   }
 }

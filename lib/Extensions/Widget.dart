@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import "dart:io";
 
-extension on Widget {
+extension XPadding on Widget {
   Widget paddingTop(double value) {
     return Padding(
       padding: EdgeInsets.only(top: value),
