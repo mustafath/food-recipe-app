@@ -25,7 +25,15 @@ class AddRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddRecipeCubit(),
+      create: (context) => AddRecipeCubit(
+        foodNameController: foodNameController,
+        foodDescriptionController: foodDescriptionController,
+        countryController: countryController,
+        prepareTimeController: prepareTimeController,
+        stepControllers: stepControllers,
+        nameControllers: nameControllers,
+        quantityControllers: quantityControllers,
+      ),
       child: RecipeScaffold(
         foodNameController: foodNameController,
         foodDescriptionController: foodDescriptionController,
