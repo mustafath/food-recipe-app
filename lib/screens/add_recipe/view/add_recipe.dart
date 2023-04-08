@@ -98,8 +98,18 @@ class RecipeScaffold extends StatelessWidget {
                 StepWidget(
                   stepControllers: stepControllers,
                 ),
-                BigButton(onPressed: () {}, buttonText: Constants.addRecipe)
-                    .paddingTop(20),
+                context.read<AddRecipeCubit>().state is AddRecipeLoading
+                    ? (context.read<AddRecipeCubit>().state as AddRecipeLoading)
+                            .isLoading
+                        ? Container(
+                            height: 60,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.accentColor,
+                              ).paddingTop(20),
+                            ))
+                        : _addRecipeButton(context).paddingTop(20)
+                    : _addRecipeButton(context).paddingTop(20),
                 SizedBox(
                   height: 300,
                 ),
@@ -109,6 +119,14 @@ class RecipeScaffold extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  BigButton _addRecipeButton(BuildContext context) {
+    return BigButton(
+        onPressed: () {
+          context.read<AddRecipeCubit>().addRecipe();
+        },
+        buttonText: Constants.addRecipe);
   }
 
   Widget _prepareTime() {
@@ -121,7 +139,7 @@ class RecipeScaffold extends StatelessWidget {
         ),
         AppTextField(
           hintText: "... mins",
-          controller: countryController,
+          controller: prepareTimeController,
           keyboardType: TextInputType.number,
         ).paddingTop(10),
       ],

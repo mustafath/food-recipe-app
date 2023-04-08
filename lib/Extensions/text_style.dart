@@ -29,6 +29,15 @@ extension AppTextStyles on TextStyle {
     color: Colors.white,
   );
 
+  static const TextStyle normalTextBold = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
+    fontSize: 16,
+    height: 1.0,
+    color: Colors.white,
+  );
+
   static const TextStyle headerTextBold = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w600, // SemiBold
@@ -56,6 +65,15 @@ extension AppTextStyles on TextStyle {
     color: Colors.black,
   );
 
+  static const TextStyle smallTextBold = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
+    fontSize: 14,
+    height: 1.0,
+    color: Colors.black,
+  );
+
   static const TextStyle smallerTextRegular = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w400,
@@ -68,6 +86,15 @@ extension AppTextStyles on TextStyle {
   static const TextStyle smallerTextSemiBold = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.normal,
+    fontSize: 11,
+    height: 1.0,
+    color: Colors.black,
+  );
+
+  static const TextStyle smallerTextBold = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w600,
     fontStyle: FontStyle.normal,
     fontSize: 11,
     height: 1.0,
