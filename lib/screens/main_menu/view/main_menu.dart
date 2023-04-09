@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -30,6 +32,9 @@ class MainMenu extends StatelessWidget {
 
   Scaffold buildScaffold(BuildContext context) {
     return Scaffold(
+      floatingActionButton: CustomFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: CustomNavigationBar(),
       resizeToAvoidBottomInset: false,
       body: Center(
           child: Container(
@@ -37,42 +42,55 @@ class MainMenu extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         color: AppColors.backgroundColor,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          welcomeHeader().paddingTop(64),
-          AppTextField(
-                  hintText: Constants.searchRecipe,
-                  controller: searchController)
-              .paddingTop(30),
-          SizedBox(
-            height: 100,
-          ),
-          Container(
-            height: 260,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: context.watch<MainMenuCubit>().recipes.length,
-                itemBuilder: (context, item) {
-                  return PlateView(
-                      recipe: context.watch<MainMenuCubit>().recipes[item]);
-                }),
-          ),
-          Text(Constants.newRecipes,
-                  style: AppTextStyles.normalTextBold
-                      .copyWith(color: AppColors.blackColor))
-              .paddingTop(20),
-          Container(
-            height: 127,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: context.watch<MainMenuCubit>().recipes.length,
-                itemBuilder: (context, item) {
-                  return NewRecipesPlate(
-                    recipe: context.watch<MainMenuCubit>().recipes[item],
-                  );
-                }),
-          ).paddingTop(5)
-        ]),
+        child: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            welcomeHeader().paddingTop(64),
+            AppTextField(
+                    hintText: Constants.searchRecipe,
+                    controller: searchController)
+                .paddingTop(30),
+            SizedBox(
+              height: 100,
+            ),
+            Container(
+              height: 260,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: context.watch<MainMenuCubit>().recipes.length,
+                  itemBuilder: (context, item) {
+                    return PlateView(
+                        recipe: context.watch<MainMenuCubit>().recipes[item]);
+                  }),
+            ),
+            Text(Constants.newRecipes,
+                    style: AppTextStyles.normalTextBold
+                        .copyWith(color: AppColors.blackColor))
+                .paddingTop(20),
+            Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    offset: Offset(100, 0),
+                    blurRadius: 100,
+                    spreadRadius: 20,
+                    color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.1))
+              ]),
+              height: 150,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: context.watch<MainMenuCubit>().recipes.length,
+                  itemBuilder: (context, item) {
+                    return NewRecipesPlate(
+                      recipe: context.watch<MainMenuCubit>().recipes[item],
+                    );
+                  }),
+            ).paddingTop(5),
+            SizedBox(
+              height: 100,
+            )
+          ]),
+        ),
       )),
     );
   }
@@ -90,6 +108,52 @@ class MainMenu extends StatelessWidget {
                     .copyWith(color: AppColors.secondaryTextColor))
             .paddingTop(5),
       ],
+    );
+  }
+}
+
+class CustomNavigationBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      notchMargin: 4.0,
+      child: Container(
+        height: 60.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.bookmark_border),
+              onPressed: () {},
+            ),
+            SizedBox(width: 48.0),
+            IconButton(
+              icon: Icon(Icons.notifications_none),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.account_circle),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomFloatingActionButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: Icon(Icons.add),
+      backgroundColor: AppColors.accentColor,
     );
   }
 }

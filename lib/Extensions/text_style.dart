@@ -83,6 +83,15 @@ extension AppTextStyles on TextStyle {
     color: Colors.black,
   );
 
+  static const TextStyle smallerTextSmallLabel = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+    fontSize: 8,
+    height: 1.65,
+    color: Colors.black,
+  );
+
   static const TextStyle smallerTextSemiBold = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
