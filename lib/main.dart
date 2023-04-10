@@ -5,6 +5,7 @@ import 'package:food_recipe_app/extensions/colors.dart';
 import 'package:food_recipe_app/screens/login/view/login_screen.dart';
 import 'package:food_recipe_app/screens/main_menu/view/main_menu.dart';
 import 'package:food_recipe_app/screens/main_menu/viewmodel/main_menu_cubit.dart';
+import 'package:food_recipe_app/screens/saved_recipes/view/saved_recipes.dart';
 import 'package:food_recipe_app/screens/search_recipe/view/search_menu.dart';
 import 'package:food_recipe_app/screens/signup/view/signup_screen.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Food Recipe App',
-      home: SearchRecipe(),
+      home: SavedRecipes(),
       theme: ThemeData(
         primaryColor: AppColors.accentColor,
       ),

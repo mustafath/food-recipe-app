@@ -118,4 +118,13 @@ extension AppTextStyles on TextStyle {
     height: 1.5,
     color: Colors.black,
   );
+
+  static const TextStyle labelRegular = TextStyle(
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+    fontSize: 14,
+    height: 1.5,
+    color: Colors.black,
+  );
 }
