@@ -124,6 +124,18 @@ class AddRecipeCubit extends Cubit<AddRecipeState> {
 
     await FirestoreService.instance
         .setData(_collection, recipe.id, recipe.toMap());
+    AuthService.instance.loggedInUser!.recipes!.add(recipe.id);
+
+    await FirestoreService.instance.updateData(
+        collection: "users",
+        documentId: AuthService.instance.loggedInUser!.id,
+        data: {
+          "recipes": AuthService.instance.loggedInUser!.recipes,
+        });
+
+    // TODO: Kullanıcılara bildirim gönderilecek.
+    // TODO: Local bildirim gönderilecek.
+
     emit(AddRecipeLoading(false));
   }
 }

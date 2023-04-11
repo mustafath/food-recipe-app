@@ -12,6 +12,7 @@ import 'package:food_recipe_app/screens/main_menu/view/new_recipes_plate_view.da
 import 'package:food_recipe_app/screens/main_menu/view/plate_view.dart';
 import 'package:food_recipe_app/screens/main_menu/viewmodel/main_menu_cubit.dart';
 import 'package:food_recipe_app/screens/saved_recipes/view/saved_recipes.dart';
+import 'package:food_recipe_app/screens/search_recipe/view/search_menu.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
 
 import '../utils/main_menu_constants.dart';
@@ -47,11 +48,40 @@ class MainMenu extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             welcomeHeader().paddingTop(64),
             Padding(
-              padding: const EdgeInsets.only(right: 30, top: 30),
-              child: AppTextField(
-                  hintText: Constants.searchRecipe,
-                  controller: context.watch<MainMenuCubit>().searchController),
-            ),
+                padding: const EdgeInsets.only(right: 30, top: 30),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchRecipe(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 55,
+                      padding: EdgeInsets.only(left: 20),
+                      alignment: Alignment.centerLeft,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Icon(Icons.search,
+                              color: AppColors.neutralGray, size: 16),
+                          Container(
+                            height: 20,
+                            child: Text("Search Recipe",
+                                style: AppTextStyles.smallerTextRegular
+                                    .copyWith(color: AppColors.neutralGray)),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                          color: AppColors.whiteColor,
+                          border: Border.all(
+                              width: 2,
+                              color: AppColors.neutralGray.withOpacity(0.5)),
+                          borderRadius: BorderRadius.circular(10)),
+                    ))),
             SizedBox(
               height: 100,
             ),

@@ -17,6 +17,7 @@ class MainMenuCubit extends Cubit<MainMenuState> {
 
   List<Recipe> allRecipes = [];
   List<Recipe> recipes = [];
+  List<Recipe> recentRecipes = [];
   MainMenuCubit() : super(MainMenuInitial()) {
     searchController.addListener(_onSearchTextChanged);
   }
