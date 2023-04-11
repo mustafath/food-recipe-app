@@ -41,7 +41,9 @@ class MainMenuCubit extends Cubit<MainMenuState> {
           .map((e) => Recipe.fromMap(e.data() as Map<String, dynamic>))
           .toList();
       this.recipes = allRecipes;
-      print(recipes);
+      recipes.forEach((element) {
+        print(element.id);
+      });
       emit(MainMenuRecipesUpdated());
     });
   }

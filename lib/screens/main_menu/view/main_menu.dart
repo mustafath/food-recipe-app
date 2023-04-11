@@ -13,8 +13,10 @@ import 'package:food_recipe_app/screens/main_menu/view/plate_view.dart';
 import 'package:food_recipe_app/screens/main_menu/viewmodel/main_menu_cubit.dart';
 import 'package:food_recipe_app/screens/saved_recipes/view/saved_recipes.dart';
 import 'package:food_recipe_app/screens/search_recipe/view/search_menu.dart';
+import 'package:food_recipe_app/screens/service/auth_service.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
 
+import '../../user_profile/user_profile_screen.dart';
 import '../utils/main_menu_constants.dart';
 
 class MainMenu extends StatelessWidget {
@@ -173,7 +175,12 @@ class CustomNavigationBar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.account_circle),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => UserProfile(
+                          userBaseModel: AuthService.instance.loggedInUser!,
+                        )));
+              },
             ),
           ],
         ),

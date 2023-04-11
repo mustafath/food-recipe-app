@@ -9,13 +9,15 @@ import 'package:food_recipe_app/screens/saved_recipes/view/saved_recipes.dart';
 import 'package:food_recipe_app/screens/search_recipe/view/search_menu.dart';
 import 'package:food_recipe_app/screens/signup/view/signup_screen.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
+import 'package:food_recipe_app/screens/user_profile/user_profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => MainMenuCubit())],
-      child: MyApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (context) => MainMenuCubit()),
+    BlocProvider(create: (context) => UserProfileCubit())
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
