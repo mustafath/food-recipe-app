@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'package:food_recipe_app/extensions/widget.dart';
-import 'package:food_recipe_app/screens/reviews/reviews_view.dart';
 import 'package:food_recipe_app/screens/service/firestore_service.dart';
 
 import '../../../componenets/small_button.dart';
@@ -108,21 +107,11 @@ class RecipeDetail extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Reviews(
-                                      recipe: recipe,
-                                    )));
-                      },
-                      child: Container(
-                        child: Text(
-                            "(${(recipe.reviews?.length ?? "").toString()} Reviews)",
-                            style: AppTextStyles.labelRegular
-                                .copyWith(color: AppColors.secondaryTextColor)),
-                      ),
+                    Container(
+                      child: Text(
+                          "(${(recipe.reviews?.length ?? "").toString()} Reviews)",
+                          style: AppTextStyles.labelRegular
+                              .copyWith(color: AppColors.secondaryTextColor)),
                     ),
                   ],
                 ),

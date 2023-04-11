@@ -27,20 +27,6 @@ class FirestoreService {
     }
   }
 
-  Future<void> addItem(String key, String collection, String documentId,
-      Map<String, dynamic> data) async {
-    CollectionReference ref = FirebaseFirestore.instance.collection(collection);
-    DocumentReference docRef = ref.doc(documentId);
-
-    await docRef.update({
-      key: FieldValue.arrayUnion([data]),
-    });
-  }
-
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserById(String id) async {
-    return await _firestore.collection('users').doc(id).get();
-  }
-
   Stream<QuerySnapshot> getCollectionStream(String collection) {
     return _firestore.collection(collection).snapshots();
   }
