@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Food Recipe App',
-      home: SavedRecipes(),
+      home: LoginScreen(),
       theme: ThemeData(
         primaryColor: AppColors.accentColor,
       ),

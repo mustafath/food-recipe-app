@@ -4,11 +4,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'package:food_recipe_app/extensions/widget.dart';
+import 'package:food_recipe_app/screens/service/firestore_service.dart';
 
 import '../../../componenets/small_button.dart';
 import '../../../extensions/colors.dart';
 import '../../../extensions/text_style.dart';
 import '../../../models/recipe.dart';
+import '../../service/auth_service.dart';
 
 class RecipeDetail extends StatelessWidget {
   Recipe recipe;
@@ -390,10 +392,7 @@ class DetailCard extends StatelessWidget {
                               style: AppTextStyles.smallerTextSmallLabel
                                   .copyWith(color: Colors.white)),
                         ),
-                        Container(
-                            alignment: Alignment.topCenter,
-                            child: Icon(Icons.bookmark_outline,
-                                color: AppColors.whiteColor, size: 14))
+                        bookMarkButton(recipe: recipe),
                       ],
                     ),
                   ),
@@ -406,5 +405,52 @@ class DetailCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class bookMarkButton extends StatefulWidget {
+  const bookMarkButton({
+    super.key,
+    required this.recipe,
+  });
+
+  final Recipe recipe;
+
+  @override
+  State<bookMarkButton> createState() => _bookMarkButtonState();
+}
+
+class _bookMarkButtonState extends State<bookMarkButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        alignment: Alignment.topCenter,
+        child: InkWell(
+          onTap: () {
+            if (AuthService.instance.loggedInUser!.savedRecipes
+                .contains(widget.recipe.id)) {
+              AuthService.instance.loggedInUser!.savedRecipes
+                  .remove(widget.recipe.id);
+            } else {
+              AuthService.instance.loggedInUser!.savedRecipes
+                  .add(widget.recipe.id);
+            }
+
+            FirestoreService.instance.updateData(
+                collection: "users",
+                data: {
+                  "savedRecipes":
+                      AuthService.instance.loggedInUser!.savedRecipes
+                },
+                documentId: AuthService.instance.loggedInUser!.id);
+
+            setState(() {});
+          },
+          child: AuthService.instance.loggedInUser!.savedRecipes
+                  .contains(widget.recipe.id)
+              ? Icon(Icons.bookmark, color: AppColors.whiteColor, size: 14)
+              : Icon(Icons.bookmark_outline,
+                  color: AppColors.whiteColor, size: 14),
+        ));
   }
 }

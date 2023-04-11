@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_recipe_app/screens/main_menu/view/main_menu.dart';
 import 'package:kartal/kartal.dart';
 
 import 'package:food_recipe_app/extensions/colors.dart';
@@ -33,7 +34,7 @@ class LoginScreen extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => AddRecipe(),
+                builder: (context) => MainMenu(),
               ),
             );
           }

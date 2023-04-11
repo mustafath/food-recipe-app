@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/user.dart';
+
 class AuthService {
   final FirebaseAuth _firebaseAuth;
   static final AuthService instance = AuthService(FirebaseAuth.instance);
+
+  LoggedInUserModel? loggedInUser;
 
   AuthService(this._firebaseAuth);
 

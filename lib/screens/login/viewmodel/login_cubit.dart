@@ -1,9 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:food_recipe_app/screens/service/auth_service.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../models/user.dart';
+import '../../service/firestore_service.dart';
 
 enum FirebaseAuthExceptions {
   emailAlreadyInUse,
@@ -28,6 +33,7 @@ class LoginCubit extends Cubit<LoginState> {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final GlobalKey<FormState> formKey;
+  final String _collection = "users";
 
   bool isLoading = false;
 
@@ -44,6 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
           .signIn(email: email, password: password)
           .then((value) {
         print(value?.user?.uid);
+        getUser(value?.user?.uid);
         setLoadingState(false);
         emit(LoginSuccess(user: value?.user));
       });
@@ -51,6 +58,19 @@ class LoginCubit extends Cubit<LoginState> {
       setLoadingState(false);
       if (e is FirebaseAuthException) emit(LoginFailure(e));
     }
+  }
+
+  Future<void> getUser(String? id) async {
+    if (id == null) return;
+    await FirestoreService.instance.getDocument(_collection, id).then((value) {
+      print(id);
+      print(value.id);
+      print(value.exists);
+
+      AuthService.instance.loggedInUser =
+          LoggedInUserModel.fromMap(value.data() as Map<String, dynamic>);
+      print(AuthService.instance.loggedInUser.toString());
+    });
   }
 
   void setLoadingState(bool state) {

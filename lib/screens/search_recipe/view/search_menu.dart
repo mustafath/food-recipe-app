@@ -10,8 +10,6 @@ import '../../../componenets/app_text_field.dart';
 import '../../main_menu/viewmodel/main_menu_cubit.dart';
 
 class SearchRecipe extends StatelessWidget {
-  TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -47,7 +45,7 @@ class SearchRecipe extends StatelessWidget {
             ),
             AppTextField(
               hintText: 'Search Recipe',
-              controller: searchController,
+              controller: context.watch<MainMenuCubit>().searchController,
             ),
             SizedBox(
               height: context.dynamicHeight(0.04),

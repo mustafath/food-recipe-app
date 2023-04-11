@@ -12,6 +12,7 @@ import 'package:food_recipe_app/utils/utils.dart';
 import '../../../componenets/app_text_field.dart';
 import '../../../models/recipe.dart';
 import '../../main_menu/viewmodel/main_menu_cubit.dart';
+import '../viewmodel/saved_recipes_cubit.dart';
 
 class SavedRecipes extends StatelessWidget {
   TextEditingController searchController = TextEditingController();
@@ -19,8 +20,8 @@ class SavedRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainMenuCubit()..getRecipes(),
-      child: BlocConsumer<MainMenuCubit, MainMenuState>(
+      create: (context) => SavedRecipesCubit()..getRecipes(),
+      child: BlocConsumer<SavedRecipesCubit, SavedRecipesState>(
         listener: (context, state) {},
         builder: (context, state) {
           return buildScaffold(context);
@@ -32,6 +33,15 @@ class SavedRecipes extends StatelessWidget {
   Scaffold buildScaffold(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.backgroundColor,
+        foregroundColor: Colors.black,
+        title: Text(
+          'Saved Recipes',
+          style: AppTextStyles.headerTextBold,
+        ),
+      ),
       body: Center(
           child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30),
@@ -39,21 +49,15 @@ class SavedRecipes extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            SizedBox(
-              height: context.dynamicHeight(0.1),
-            ),
-            Text(
-              'Saved Recipes',
-              style: AppTextStyles.headerTextBold,
-            ),
             Expanded(
               child: ListView.builder(
-                itemCount: context.watch<MainMenuCubit>().recipes.length,
+                itemCount: context.watch<SavedRecipesCubit>().recipes.length,
                 itemBuilder: (context, index) {
                   return Container(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: SavedCard(
-                        recipe: context.watch<MainMenuCubit>().recipes[index],
+                        recipe:
+                            context.watch<SavedRecipesCubit>().recipes[index],
                       ));
                 },
               ),
@@ -190,8 +194,7 @@ class SavedCard extends StatelessWidget {
                             ),
                             Container(
                                 alignment: Alignment.topCenter,
-                                child: Icon(Icons.bookmark_outline,
-                                    color: AppColors.whiteColor, size: 14))
+                                child: bookMarkButton(recipe: recipe))
                           ],
                         ),
                       ),

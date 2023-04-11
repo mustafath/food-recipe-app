@@ -88,7 +88,7 @@ class RecipeScaffold extends StatelessWidget {
                 _buildFoodNameTextField(),
                 _buildFoodDescriptionLabel(),
                 _buildFoodDescriptionTextField(),
-                _buildImageSelectionRow(context),
+                Container(child: _buildImageSelectionRow(context)),
                 _country(),
                 _prepareTime(),
                 IngredientWidget(
@@ -222,7 +222,6 @@ class RecipeScaffold extends StatelessWidget {
       child: Container(
         color: AppColors.neutralGray,
         padding: EdgeInsets.all(10),
-        width: 140,
         height: 130 * 1.6,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
@@ -263,9 +262,9 @@ class RecipeScaffold extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Container(
+        width: 150,
         padding: EdgeInsets.all(10),
         color: AppColors.neutralGray,
-        width: 210,
         height: 130 * 1.6,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           const Text(

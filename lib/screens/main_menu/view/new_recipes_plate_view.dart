@@ -7,6 +7,7 @@ import 'package:food_recipe_app/extensions/text_style.dart';
 
 import '../../../Extensions/colors.dart';
 import '../../../models/recipe.dart';
+import '../../recipe_detail/view/recipe_detail.dart';
 
 class NewRecipesPlate extends StatefulWidget {
   Recipe recipe;
@@ -40,98 +41,109 @@ class _NewRecipesPlateState extends State<NewRecipesPlate> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      width: 280,
-      height: 127,
-      child: Stack(children: [
-        Positioned(
-          bottom: 0,
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: Container(
-              color: AppColors.whiteColor,
-              padding: EdgeInsets.all(10),
-              width: 280,
-              height: 95,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        width: 130,
-                        child: Text(
-                          widget.recipe.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.smallTextBold,
-                        ),
-                      ),
-                    ),
-                    RatingBarIndicator(
-                      itemCount: 5,
-                      itemSize: 10.0,
-                      direction: Axis.horizontal,
-                      rating: rates,
-                      itemBuilder: (context, index) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 13,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 25,
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.accentColor,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RecipeDetail(
+                      recipe: widget.recipe,
+                    )));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        width: 280,
+        height: 127,
+        child: Stack(children: [
+          Positioned(
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              child: Container(
+                color: AppColors.whiteColor,
+                padding: EdgeInsets.all(10),
+                width: 280,
+                height: 95,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Container(
+                          width: 130,
+                          child: Text(
+                            widget.recipe.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.smallTextBold,
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
+                      ),
+                      RatingBarIndicator(
+                        itemCount: 5,
+                        itemSize: 10.0,
+                        direction: Axis.horizontal,
+                        rating: rates,
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        Text("By Mustafa Girgin",
+                      ),
+                      SizedBox(
+                        height: 13,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 25,
+                            child: CircleAvatar(
+                              backgroundColor: AppColors.accentColor,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("By Mustafa Girgin",
+                              style: AppTextStyles.smallerTextRegular.copyWith(
+                                  color: AppColors.secondaryTextColor)),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Icon(
+                            Icons.av_timer,
+                            color: AppColors.secondaryTextColor,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "${widget.recipe.prepareTime.truncate()} min",
                             style: AppTextStyles.smallerTextRegular
-                                .copyWith(color: AppColors.secondaryTextColor)),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Icon(
-                          Icons.av_timer,
-                          color: AppColors.secondaryTextColor,
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "${widget.recipe.prepareTime.truncate()} min",
-                          style: AppTextStyles.smallerTextRegular
-                              .copyWith(color: AppColors.secondaryTextColor),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    )
-                  ]),
+                                .copyWith(color: AppColors.secondaryTextColor),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      )
+                    ]),
+              ),
             ),
           ),
-        ),
-        Positioned(
-          right: 10,
-          top: 0,
-          child: Container(
-            height: 100,
-            width: 100,
-            child: CircleAvatar(
-              backgroundColor: AppColors.accentColor,
-              backgroundImage: NetworkImage(widget.recipe.plateImageURL ?? ""),
+          Positioned(
+            right: 10,
+            top: 0,
+            child: Container(
+              height: 100,
+              width: 100,
+              child: CircleAvatar(
+                backgroundColor: AppColors.accentColor,
+                backgroundImage:
+                    NetworkImage(widget.recipe.plateImageURL ?? ""),
+              ),
             ),
-          ),
-        )
-      ]),
+          )
+        ]),
+      ),
     );
   }
 }

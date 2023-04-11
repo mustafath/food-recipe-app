@@ -16,6 +16,17 @@ class FirestoreService {
     }
   }
 
+  Future<void> updateData(
+      {required String collection,
+      required String documentId,
+      required Map<String, dynamic> data}) async {
+    try {
+      await _firestore.collection(collection).doc(documentId).update(data);
+    } on FirebaseException catch (e) {
+      throw e;
+    }
+  }
+
   Stream<QuerySnapshot> getCollectionStream(String collection) {
     return _firestore.collection(collection).snapshots();
   }

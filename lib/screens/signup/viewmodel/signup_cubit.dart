@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipe_app/models/user.dart';
 
 import '../../service/auth_service.dart';
+import '../../service/firestore_service.dart';
 
 abstract class SignupState {}
 
@@ -15,6 +17,7 @@ class SignupCubit extends Cubit<SignupState> {
   final TextEditingController passwordController;
   final TextEditingController passwordAgainController;
   bool isLoading = false;
+  final String _collection = "users";
 
   SignupCubit({
     required this.passwordAgainController,
@@ -35,7 +38,9 @@ class SignupCubit extends Cubit<SignupState> {
           .signUp(email: email, password: password, name: name)
           .then((value) {
         print(value?.user?.uid);
-
+        Map<String, dynamic> data =
+            LoggedInUserModel(id: value?.user?.uid ?? "", name: name).toMap();
+        addUser(value?.user?.uid ?? "", data);
         emit(SignupSuccess(user: value?.user));
       });
       setLoadingState(false);
@@ -48,6 +53,10 @@ class SignupCubit extends Cubit<SignupState> {
       }
       emit(SignupFailure(exception: e, message: errorMessage));
     }
+  }
+
+  Future<void> addUser(String id, Map<String, dynamic> data) async {
+    await FirestoreService.instance.setData(_collection, id, data);
   }
 
   String _getErrorMessage(String errorCode) {

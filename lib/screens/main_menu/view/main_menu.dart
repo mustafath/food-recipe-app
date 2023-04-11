@@ -7,16 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe_app/componenets/app_text_field.dart';
 import 'package:food_recipe_app/extensions/colors.dart';
 import 'package:food_recipe_app/extensions/text_style.dart';
+import 'package:food_recipe_app/screens/add_recipe/view/add_recipe.dart';
 import 'package:food_recipe_app/screens/main_menu/view/new_recipes_plate_view.dart';
 import 'package:food_recipe_app/screens/main_menu/view/plate_view.dart';
 import 'package:food_recipe_app/screens/main_menu/viewmodel/main_menu_cubit.dart';
+import 'package:food_recipe_app/screens/saved_recipes/view/saved_recipes.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
 
 import '../utils/main_menu_constants.dart';
 
 class MainMenu extends StatelessWidget {
-  TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -46,10 +46,12 @@ class MainMenu extends StatelessWidget {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             welcomeHeader().paddingTop(64),
-            AppTextField(
-                    hintText: Constants.searchRecipe,
-                    controller: searchController)
-                .paddingTop(30),
+            Padding(
+              padding: const EdgeInsets.only(right: 30, top: 30),
+              child: AppTextField(
+                  hintText: Constants.searchRecipe,
+                  controller: context.watch<MainMenuCubit>().searchController),
+            ),
             SizedBox(
               height: 100,
             ),
@@ -129,7 +131,10 @@ class CustomNavigationBar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.bookmark_border),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (c) => SavedRecipes()));
+              },
             ),
             SizedBox(width: 48.0),
             IconButton(
@@ -151,7 +156,10 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => AddRecipe()));
+      },
       child: Icon(Icons.add),
       backgroundColor: AppColors.accentColor,
     );
