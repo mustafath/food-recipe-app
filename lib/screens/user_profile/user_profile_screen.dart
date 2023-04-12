@@ -13,10 +13,8 @@ import '../../models/recipe.dart';
 import '../recipe_detail/view/recipe_detail.dart';
 
 class UserProfile extends StatelessWidget {
-  UserBaseModel userBaseModel;
   UserProfile({
     Key? key,
-    required this.userBaseModel,
   }) : super(key: key);
 
   @override
@@ -54,53 +52,70 @@ class UserProfile extends StatelessWidget {
       ),
       resizeToAvoidBottomInset: false,
       body: Center(
-          child: Container(
-        width: double.infinity,
-        color: AppColors.backgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage:
-                          NetworkImage(userBaseModel.imageUrl ?? ""),
+          child: context.watch<UserProfileCubit>().userBaseModel == null
+              ? Container()
+              : Container(
+                  width: double.infinity,
+                  color: AppColors.backgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 40,
+                                backgroundImage: NetworkImage(context
+                                        .watch<UserProfileCubit>()
+                                        .userBaseModel!
+                                        .imageUrl ??
+                                    ""),
+                              ),
+                              _textAndNumberColumn('Recipes', 0),
+                              _textAndNumberColumn('Followers', 0),
+                              _textAndNumberColumn('Following', 0),
+                            ],
+                          ),
+                        ).paddingTop(10),
+                        Container(
+                                child: _nameAndBio(
+                                    context
+                                        .watch<UserProfileCubit>()
+                                        .userBaseModel!
+                                        .name,
+                                    context
+                                        .watch<UserProfileCubit>()
+                                        .userBaseModel!
+                                        .bio))
+                            .paddingTop(15),
+                        Text(
+                          "Recipes",
+                          style: AppTextStyles.largeTextBold,
+                        ).paddingTop(15),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: context
+                                  .watch<UserProfileCubit>()
+                                  .recipes
+                                  .length,
+                              itemBuilder: (context, index) {
+                                return SavedCard(
+                                  recipe: context
+                                      .watch<UserProfileCubit>()
+                                      .recipes[index],
+                                ).paddingTop(10);
+                              }),
+                        )
+                      ],
                     ),
-                    _textAndNumberColumn('Recipes', 0),
-                    _textAndNumberColumn('Followers', 0),
-                    _textAndNumberColumn('Following', 0),
-                  ],
-                ),
-              ).paddingTop(10),
-              Container(
-                      child: _nameAndBio(userBaseModel.name, userBaseModel.bio))
-                  .paddingTop(15),
-              Text(
-                "Recipes",
-                style: AppTextStyles.largeTextBold,
-              ).paddingTop(15),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: context.watch<UserProfileCubit>().recipes.length,
-                    itemBuilder: (context, index) {
-                      return SavedCard(
-                        recipe:
-                            context.watch<UserProfileCubit>().recipes[index],
-                      ).paddingTop(10);
-                    }),
-              )
-            ],
-          ),
-        ),
-      )),
+                  ),
+                )),
     );
   }
 

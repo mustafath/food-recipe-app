@@ -12,14 +12,24 @@ class MainMenuInitial extends MainMenuState {}
 
 class MainMenuRecipesUpdated extends MainMenuState {}
 
+class IndexChangedState extends MainMenuState {}
+
 class MainMenuCubit extends Cubit<MainMenuState> {
   TextEditingController searchController = TextEditingController();
+  PageController pageController = PageController();
 
+  int currentIndex = 0;
   List<Recipe> allRecipes = [];
   List<Recipe> recipes = [];
   List<Recipe> recentRecipes = [];
   MainMenuCubit() : super(MainMenuInitial()) {
     searchController.addListener(_onSearchTextChanged);
+  }
+
+  void changeIndex(int index) {
+    currentIndex = index;
+    pageController.jumpToPage(index);
+    emit(IndexChangedState());
   }
 
   void _onSearchTextChanged() {

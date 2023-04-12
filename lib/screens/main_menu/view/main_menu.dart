@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:food_recipe_app/componenets/app_text_field.dart';
 import 'package:food_recipe_app/extensions/colors.dart';
 import 'package:food_recipe_app/extensions/text_style.dart';
@@ -39,94 +40,105 @@ class MainMenu extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomNavigationBar(),
       resizeToAvoidBottomInset: false,
-      body: Center(
-          child: Container(
-        padding: EdgeInsets.only(left: 30),
-        width: double.infinity,
-        height: double.infinity,
-        color: AppColors.backgroundColor,
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            welcomeHeader().paddingTop(64),
-            Padding(
-                padding: const EdgeInsets.only(right: 30, top: 30),
-                child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SearchRecipe(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 55,
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerLeft,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Icon(Icons.search,
-                              color: AppColors.neutralGray, size: 16),
-                          Container(
-                            height: 20,
-                            child: Text("Search Recipe",
-                                style: AppTextStyles.smallerTextRegular
-                                    .copyWith(color: AppColors.neutralGray)),
-                          ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                              width: 2,
-                              color: AppColors.neutralGray.withOpacity(0.5)),
-                          borderRadius: BorderRadius.circular(10)),
-                    ))),
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              height: 260,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: context.watch<MainMenuCubit>().recipes.length,
-                  itemBuilder: (context, item) {
-                    return PlateView(
-                        recipe: context.watch<MainMenuCubit>().recipes[item]);
-                  }),
-            ),
-            Text(Constants.newRecipes,
-                    style: AppTextStyles.normalTextBold
-                        .copyWith(color: AppColors.blackColor))
-                .paddingTop(20),
-            Container(
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    offset: Offset(100, 0),
-                    blurRadius: 100,
-                    spreadRadius: 20,
-                    color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.1))
-              ]),
-              height: 150,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: context.watch<MainMenuCubit>().recipes.length,
-                  itemBuilder: (context, item) {
-                    return NewRecipesPlate(
-                      recipe: context.watch<MainMenuCubit>().recipes[item],
-                    );
-                  }),
-            ).paddingTop(5),
-            SizedBox(
-              height: 100,
-            )
+      body: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: context.watch<MainMenuCubit>().pageController,
+          children: [
+            buildMainMenu(context),
+            SavedRecipes(),
+            Container(),
+            UserProfile(),
           ]),
-        ),
-      )),
     );
+  }
+
+  Center buildMainMenu(BuildContext context) {
+    return Center(
+        child: Container(
+      padding: EdgeInsets.only(left: 30),
+      width: double.infinity,
+      height: double.infinity,
+      color: AppColors.backgroundColor,
+      child: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          welcomeHeader().paddingTop(64),
+          Padding(
+              padding: const EdgeInsets.only(right: 30, top: 30),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchRecipe(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 55,
+                    padding: EdgeInsets.only(left: 20),
+                    alignment: Alignment.centerLeft,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Icon(Icons.search,
+                            color: AppColors.neutralGray, size: 16),
+                        Container(
+                          height: 20,
+                          child: Text("Search Recipe",
+                              style: AppTextStyles.smallerTextRegular
+                                  .copyWith(color: AppColors.neutralGray)),
+                        ),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        border: Border.all(
+                            width: 2,
+                            color: AppColors.neutralGray.withOpacity(0.5)),
+                        borderRadius: BorderRadius.circular(10)),
+                  ))),
+          SizedBox(
+            height: 100,
+          ),
+          Container(
+            height: 260,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: context.watch<MainMenuCubit>().recipes.length,
+                itemBuilder: (context, item) {
+                  return PlateView(
+                      recipe: context.watch<MainMenuCubit>().recipes[item]);
+                }),
+          ),
+          Text(Constants.newRecipes,
+                  style: AppTextStyles.normalTextBold
+                      .copyWith(color: AppColors.blackColor))
+              .paddingTop(20),
+          Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  offset: Offset(100, 0),
+                  blurRadius: 100,
+                  spreadRadius: 20,
+                  color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.1))
+            ]),
+            height: 150,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: context.watch<MainMenuCubit>().recipes.length,
+                itemBuilder: (context, item) {
+                  return NewRecipesPlate(
+                    recipe: context.watch<MainMenuCubit>().recipes[item],
+                  );
+                }),
+          ).paddingTop(5),
+          SizedBox(
+            height: 100,
+          )
+        ]),
+      ),
+    ));
   }
 
   Column welcomeHeader() {
@@ -149,42 +161,74 @@ class MainMenu extends StatelessWidget {
 class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: CircularNotchedRectangle(),
-      notchMargin: 4.0,
-      child: Container(
-        height: 60.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {},
+    return BlocConsumer<MainMenuCubit, MainMenuState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 4.0,
+          child: Container(
+            height: 60.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    context.read<MainMenuCubit>().changeIndex(0);
+                  },
+                  child: context.watch<MainMenuCubit>().currentIndex == 0
+                      ? SvgPicture.asset(
+                          "lib/assets/home_filled.svg",
+                        )
+                      : SvgPicture.asset(
+                          "lib/assets/home.svg",
+                        ),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.read<MainMenuCubit>().changeIndex(1);
+                  },
+                  child: context.watch<MainMenuCubit>().currentIndex == 1
+                      ? SvgPicture.asset(
+                          "lib/assets/bookmark_filled.svg",
+                        )
+                      : SvgPicture.asset(
+                          "lib/assets/bookmark.svg",
+                        ),
+                ),
+                SizedBox(width: 48.0),
+                InkWell(
+                  onTap: () {
+                    context.read<MainMenuCubit>().changeIndex(2);
+                    print(context.read<MainMenuCubit>().currentIndex);
+                  },
+                  child: context.watch<MainMenuCubit>().currentIndex == 2
+                      ? SvgPicture.asset(
+                          "lib/assets/bell_filled.svg",
+                        )
+                      : SvgPicture.asset(
+                          "lib/assets/bell.svg",
+                        ),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.read<MainMenuCubit>().changeIndex(3);
+                  },
+                  child: context.watch<MainMenuCubit>().currentIndex == 3
+                      ? SvgPicture.asset(
+                          "lib/assets/profile_filled.svg",
+                        )
+                      : SvgPicture.asset(
+                          "lib/assets/profile.svg",
+                        ),
+                ),
+              ],
             ),
-            IconButton(
-              icon: Icon(Icons.bookmark_border),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (c) => SavedRecipes()));
-              },
-            ),
-            SizedBox(width: 48.0),
-            IconButton(
-              icon: Icon(Icons.notifications_none),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => UserProfile(
-                          userBaseModel: AuthService.instance.loggedInUser!,
-                        )));
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

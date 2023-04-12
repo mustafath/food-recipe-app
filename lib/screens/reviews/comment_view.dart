@@ -53,12 +53,12 @@ class _CommentViewState extends State<CommentView> {
                     return;
                   }
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UserProfile(
-                                userBaseModel: user!,
-                              )));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => UserProfile(
+                  //               userBaseModel: user!,
+                  //             )));
                 },
                 child: CircleAvatar(
                   radius: 15,
