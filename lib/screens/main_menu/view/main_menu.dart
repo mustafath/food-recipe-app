@@ -17,6 +17,7 @@ import 'package:food_recipe_app/screens/search_recipe/view/search_menu.dart';
 import 'package:food_recipe_app/screens/service/auth_service.dart';
 import 'package:food_recipe_app/screens/splash_screen/splash_screen.dart';
 
+import '../../notifications/notifications_view.dart';
 import '../../user_profile/user_profile_screen.dart';
 import '../utils/main_menu_constants.dart';
 
@@ -46,7 +47,7 @@ class MainMenu extends StatelessWidget {
           children: [
             buildMainMenu(context),
             SavedRecipes(),
-            Container(),
+            NotificationsView(),
             UserProfile(),
           ]),
     );

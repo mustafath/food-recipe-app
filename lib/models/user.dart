@@ -6,10 +6,12 @@ abstract class UserBaseModel {
   List<String>? recipes;
   List<String>? followers;
   List<String>? following;
+  String? fcmToken;
 
   UserBaseModel({
     required this.id,
     required this.name,
+    this.fcmToken = "",
     this.imageUrl = "",
     this.bio = "",
     this.recipes = const [],
@@ -23,6 +25,7 @@ abstract class UserBaseModel {
       'name': name,
       'imageUrl': imageUrl,
       'bio': bio,
+      'fcmToken': fcmToken,
       'recipes': recipes,
       'followers': followers,
       'following': following,
@@ -36,6 +39,7 @@ class LoggedInUserModel extends UserBaseModel {
   LoggedInUserModel({
     required String id,
     required String name,
+    String? fcmToken,
     String imageUrl = "",
     String bio = "",
     List<String> recipes = const [],
@@ -45,6 +49,7 @@ class LoggedInUserModel extends UserBaseModel {
   }) : super(
           id: id,
           name: name,
+          fcmToken: fcmToken,
           imageUrl: imageUrl,
           bio: bio,
           recipes: recipes,
@@ -65,6 +70,7 @@ class LoggedInUserModel extends UserBaseModel {
       name: map['name'],
       imageUrl: map['imageUrl'],
       bio: map['bio'],
+      fcmToken: map['fcmToken'],
       recipes: List<String>.from(map['recipes']),
       followers: List<String>.from(map['followers']),
       following: List<String>.from(map['following']),
@@ -77,6 +83,7 @@ class UserDisplayModel extends UserBaseModel {
   UserDisplayModel({
     required String id,
     required String name,
+    String? fcmToken,
     String imageUrl = "",
     String bio = "",
     List<String> recipes = const [],
@@ -86,6 +93,7 @@ class UserDisplayModel extends UserBaseModel {
           id: id,
           name: name,
           imageUrl: imageUrl,
+          fcmToken: fcmToken,
           bio: bio,
           recipes: recipes,
           followers: followers,
@@ -97,6 +105,7 @@ class UserDisplayModel extends UserBaseModel {
       id: map['id'],
       name: map['name'],
       imageUrl: map['imageUrl'],
+      fcmToken: map['fcmToken'],
       bio: map['bio'],
       recipes: List<String>.from(map['recipes']),
       followers: List<String>.from(map['followers']),

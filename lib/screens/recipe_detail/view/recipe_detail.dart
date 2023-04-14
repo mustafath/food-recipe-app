@@ -163,7 +163,7 @@ class RecipeDetail extends StatelessWidget {
                   ],
                 ),
               ).paddingTop(30),
-              IngredientAndProcedure(
+              SegmentedController(
                 recipe: recipe,
               ).paddingTop(28)
             ],
@@ -174,18 +174,18 @@ class RecipeDetail extends StatelessWidget {
   }
 }
 
-class IngredientAndProcedure extends StatefulWidget {
+class SegmentedController extends StatefulWidget {
   Recipe recipe;
-  IngredientAndProcedure({
+  SegmentedController({
     Key? key,
     required this.recipe,
   }) : super(key: key);
 
   @override
-  _IngredientAndProcedureState createState() => _IngredientAndProcedureState();
+  _SegmentedControllerState createState() => _SegmentedControllerState();
 }
 
-class _IngredientAndProcedureState extends State<IngredientAndProcedure> {
+class _SegmentedControllerState extends State<SegmentedController> {
   int selectedIndex = 0;
 
   @override

@@ -25,7 +25,6 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         print(recipe);
         recipes.add(recipe);
       }
-
       emit(UserProfileUpdated());
     }
   }

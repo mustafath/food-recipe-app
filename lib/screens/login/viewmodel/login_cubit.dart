@@ -51,6 +51,7 @@ class LoginCubit extends Cubit<LoginState> {
           .then((value) {
         print(value?.user?.uid);
         getUser(value?.user?.uid);
+
         setLoadingState(false);
         emit(LoginSuccess(user: value?.user));
       });
